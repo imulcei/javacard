@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>256</y>
+      <x>376</x>
+      <y>200</y>
       <w>192</w>
       <h>280</h>
     </coordinates>
@@ -32,8 +32,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>168</x>
-      <y>296</y>
+      <x>144</x>
+      <y>240</y>
       <w>168</w>
       <h>80</h>
     </coordinates>
@@ -48,8 +48,8 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
-      <y>336</y>
+      <x>304</x>
+      <y>280</y>
       <w>88</w>
       <h>24</h>
     </coordinates>
@@ -59,8 +59,8 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>664</x>
-      <y>280</y>
+      <x>640</x>
+      <y>224</y>
       <w>168</w>
       <h>88</h>
     </coordinates>
@@ -72,8 +72,8 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>688</x>
-      <y>64</y>
+      <x>664</x>
+      <y>8</y>
       <w>336</w>
       <h>152</h>
     </coordinates>
@@ -88,8 +88,8 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>744</x>
-      <y>400</y>
+      <x>720</x>
+      <y>344</y>
       <w>168</w>
       <h>88</h>
     </coordinates>
@@ -101,8 +101,8 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>824</x>
-      <y>520</y>
+      <x>800</x>
+      <y>464</y>
       <w>168</w>
       <h>88</h>
     </coordinates>
@@ -114,8 +114,8 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>784</x>
-      <y>688</y>
+      <x>760</x>
+      <y>616</y>
       <w>240</w>
       <h>152</h>
     </coordinates>
@@ -130,12 +130,12 @@ Deserializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>616</y>
+      <x>376</x>
+      <y>664</y>
       <w>192</w>
       <h>104</h>
     </coordinates>
-    <panel_attributes>ContactManager
+    <panel_attributes>ContactController
 --
 
 +addContact()
@@ -147,22 +147,22 @@ Deserializer&lt;T&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>488</x>
-      <y>528</y>
-      <w>56</w>
-      <h>104</h>
+      <x>464</x>
+      <y>472</y>
+      <w>40</w>
+      <h>208</h>
     </coordinates>
-    <panel_attributes>lt=-
-m1=1
-m2=1..*
-gère &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+m1=0..*
+m2=1
+  </panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>320</y>
+      <x>560</x>
+      <y>264</y>
       <w>96</w>
       <h>24</h>
     </coordinates>
@@ -172,8 +172,8 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>520</y>
+      <x>560</x>
+      <y>464</y>
       <w>256</w>
       <h>24</h>
     </coordinates>
@@ -183,8 +183,8 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>448</y>
+      <x>560</x>
+      <y>392</y>
       <w>176</w>
       <h>24</h>
     </coordinates>
@@ -194,8 +194,8 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>736</x>
-      <y>208</y>
+      <x>712</x>
+      <y>152</y>
       <w>24</w>
       <h>88</h>
     </coordinates>
@@ -205,8 +205,8 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>864</x>
-      <y>208</y>
+      <x>840</x>
+      <y>152</y>
       <w>24</w>
       <h>208</h>
     </coordinates>
@@ -216,8 +216,8 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>952</x>
-      <y>208</y>
+      <x>928</x>
+      <y>152</y>
       <w>24</w>
       <h>328</h>
     </coordinates>
@@ -227,12 +227,69 @@ gère &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>904</x>
-      <y>600</y>
+      <x>880</x>
+      <y>544</y>
       <w>24</w>
-      <h>104</h>
+      <h>88</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>424</x>
+      <y>56</y>
+      <w>168</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>CsvSerializer
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>136</y>
+      <w>24</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>96</y>
+      <w>96</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>120</x>
+      <y>160</y>
+      <w>504</w>
+      <h>368</h>
+    </coordinates>
+    <panel_attributes>models</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>128</x>
+      <y>560</y>
+      <w>504</w>
+      <h>344</h>
+    </coordinates>
+    <panel_attributes>controllers</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
