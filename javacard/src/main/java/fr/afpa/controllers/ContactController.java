@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
+import fr.afpa.tools.ContactChecker;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -22,6 +24,10 @@ public class ContactController {
             pseudoTextField, githubTextField;
     @FXML
     private ComboBox<Gender> genderComboBox;
+
+    @FXML
+    private TextArea errorTextArea;
+
     // boutons du formulaire
     @FXML
     private Button sendFormButton, cancelButton;
@@ -55,6 +61,9 @@ public class ContactController {
     private CheckBox csvCheckBox, jsonCheckBox, vCardCheckBox;
     @FXML
     private Button exportContactsButton, cancelExportButton;
+    
+
+    private String messageStatut = "";
 
     // variables QR Code
     @FXML
@@ -88,8 +97,70 @@ public class ContactController {
         String pseudo = pseudoTextField.getText();
         String github = githubTextField.getText();
 
+        // Vérifier les données entrées
+
+        
+            // Utiliser ContactChecker pour valider les données
+            if(!ContactChecker.isNomPrenomValid(firstName)){
+                messageStatut =  messageStatut + "Prénom invalide\n";
+            }   
+            if(!ContactChecker.isNomPrenomValid(lastName)){
+                messageStatut =  messageStatut + "Nom invalide\n";
+            }
+            if(!ContactChecker.isEmailValid(emailString)){
+                messageStatut =  messageStatut + "Email invalide\n";
+            }
+            if(!ContactChecker.isNumero(persoPhoneNum)){
+                messageStatut =  messageStatut + "Numéro de téléphone personnel invalide\n";
+            }
+            if(!ContactChecker.isNumero(proPhoneNum)){
+                messageStatut =  messageStatut + "Numéro de téléphone professionnel invalide\n";
+            }
+            if(!ContactChecker.isDateValid(birthday)){
+                messageStatut =  messageStatut + "Date de naissance invalide\n";
+            }
+            if(!ContactChecker.isAdresse(address)){
+                messageStatut =  messageStatut + "Adresse invalide\n";
+            }
+            if(!ContactChecker.isPseudoValid(pseudo)){
+                messageStatut =  messageStatut + "Pseudo invalide\n";
+            }
+            if(!ContactChecker.isGithubValid(github)){
+                messageStatut =  messageStatut + "GitHub invalide\n";
+            }
+           
+            if (!messageStatut.isEmpty()) {
+                // Afficher les erreurs dans la zone de texte d'erreur
+                errorTextArea.setText(messageStatut);
+                return; // Sortir de la méthode si des erreurs sont présentes
+            }
+        
+
+        // Si toutes les vérifications sont passées, créer le contact
+        // Créer un nouveau contact 
+
         Contact newContact = new Contact(firstName, lastName, gender, birthday, pseudo, address, persoPhoneNum,
                 proPhoneNum, emailString, github);
+        // Ajouter le contact à la liste des contacts   
+
+        contactsList.add(newContact);
+        // Réinitialiser le formulaire 
+        clearForm(); 
+    }
+
+
+    private void clearForm() {
+        firstNameTextField.clear();
+        lastNameTextField.clear();
+        emailTextField.clear();
+        personalPhoneNumTextField.clear();
+        birthdayTextField.clear();
+        proPhoneNumTextField.clear();
+        addressTextField.clear();
+        pseudoTextField.clear();
+        githubTextField.clear();
+        genderComboBox.setValue(null);
+        errorTextArea.clear();
     }
 
     /**
