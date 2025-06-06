@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<GridPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+   </rowConstraints>
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label text="Prénom" />
+            <TextField fx:id="firstNameTextField" alignment="TOP_LEFT" />
+            <Label text="Adresse Mail" />
+            <TextField fx:id="emailTextField" />
+            <Label text="Genre" />
+            <TextField fx:id="genderTextField" />
+            <Label text="Adresse" />
+            <TextField fx:id="addressTextField" />
+            <Label text="Pseudo" />
+            <TextField fx:id="pseudoTextField" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+         <children>
+            <Label text="Nom" />
+            <TextField fx:id="lastNameTextField" />
+            <Label text="Numéro de téléphone personnel" />
+            <TextField fx:id="personalPhoneNumTextField" />
+            <Label text="Date de naissance" />
+            <TextField fx:id="birthdayTextField" />
+            <Label text="Numéro de téléphone professionnel" />
+            <TextField fx:id="proPhoneNumTextField" />
+            <Label text="Github / Gitlab" />
+            <TextField fx:id="githubTextField" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+         <children>
+            <Button fx:id="sendFormButton" mnemonicParsing="false" onAction="#sendForm" text="Valider">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelForm" text="Annuler">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

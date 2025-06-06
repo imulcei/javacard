@@ -17,7 +17,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("javacard"), 640, 480);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/afpa/home.fxml"));
+        Scene scene = new Scene(loader.load(), 600, 350);
         stage.setScene(scene);
         stage.show();
     }

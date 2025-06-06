@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exporter en..." />
+      <CheckBox fx:id="csvCheckBox" mnemonicParsing="false" text=".csv" />
+      <CheckBox fx:id="jsonCheckBox" mnemonicParsing="false" text=".json" />
+      <CheckBox fx:id="vCardCheckBox" mnemonicParsing="false" text=".vcard" />
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Button mnemonicParsing="false" text="Exporter" />
+            <Button mnemonicParsing="false" text="Annuler" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

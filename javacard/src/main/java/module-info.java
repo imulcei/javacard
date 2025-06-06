@@ -5,4 +5,5 @@ module fr.afpa {
     opens fr.afpa to javafx.fxml;
 
     exports fr.afpa;
+    exports fr.afpa.controllers;
 }
