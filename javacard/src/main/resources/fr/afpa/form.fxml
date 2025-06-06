@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -27,7 +28,7 @@
             <Label text="Adresse Mail" />
             <TextField fx:id="emailTextField" />
             <Label text="Genre" />
-            <TextField fx:id="genderTextField" />
+            <ComboBox fx:id="genderComboBox" prefWidth="150.0" />
             <Label text="Adresse" />
             <TextField fx:id="addressTextField" />
             <Label text="Pseudo" />

@@ -1,12 +1,13 @@
 package fr.afpa.controllers;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.afpa.models.Contact;
+import fr.afpa.models.Gender;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -16,9 +17,11 @@ public class ContactController {
     // variables du formulaire
     @FXML
     private TextField firstNameTextField, lastNameTextField,
-            emailTextField, personalPhoneNumTextField, genderTextField,
+            emailTextField, personalPhoneNumTextField,
             birthdayTextField, addressTextField, proPhoneNumTextField,
             pseudoTextField, githubTextField;
+    @FXML
+    private ComboBox<Gender> genderComboBox;
     // boutons du formulaire
     @FXML
     private Button sendFormButton, cancelButton;
@@ -65,7 +68,7 @@ public class ContactController {
 
     @FXML
     public void initialize() {
-        
+        genderComboBox.getItems().setAll(Gender.values());
     }
 
     /**
@@ -74,6 +77,19 @@ public class ContactController {
     public void addContact() {
         // récupérer les données entrées dans le form
         // créer un new Contact avec les données
+        String firstName = firstNameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String emailString = emailTextField.getText();
+        String persoPhoneNum = personalPhoneNumTextField.getText();
+        String birthday = birthdayTextField.getText();
+        String proPhoneNum = proPhoneNumTextField.getText();
+        Gender gender = genderComboBox.getValue();
+        String address = addressTextField.getText();
+        String pseudo = pseudoTextField.getText();
+        String github = githubTextField.getText();
+
+        Contact newContact = new Contact(firstName, lastName, gender, birthday, pseudo, address, persoPhoneNum,
+                proPhoneNum, emailString, github);
     }
 
     /**

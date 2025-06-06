@@ -5,18 +5,18 @@ import fr.afpa.controllers.ContactController;
 public class Contact {
     private String firstName;
     private String lastName;
-    private Enum<Gender> gender;
+    private Gender gender;
     private String birthday;
     private String pseudo;
     private String address;
-    private Long persoPhoneNum;
-    private Long proPhoneNum;
+    private String persoPhoneNum;
+    private String proPhoneNum;
     private String email;
     private String githubPage;
     private ContactController contactController;
 
-    public Contact(String firstName, String lastName, Enum<Gender> gender, String birthday, String pseudo,
-            String address, Long persoPhoneNum, Long proPhoneNum, String email, String githubPage) {
+    public Contact(String firstName, String lastName, Gender gender, String birthday, String pseudo,
+            String address, String persoPhoneNum, String proPhoneNum, String email, String githubPage) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -45,11 +45,11 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public Enum<Gender> getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Enum<Gender> gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -77,19 +77,19 @@ public class Contact {
         this.address = address;
     }
 
-    public Long getPersoPhoneNum() {
+    public String getPersoPhoneNum() {
         return persoPhoneNum;
     }
 
-    public void setPersoPhoneNum(Long persoPhoneNum) {
+    public void setPersoPhoneNum(String persoPhoneNum) {
         this.persoPhoneNum = persoPhoneNum;
     }
 
-    public Long getProPhoneNum() {
+    public String getProPhoneNum() {
         return proPhoneNum;
     }
 
-    public void setProPhoneNum(Long proPhoneNum) {
+    public void setProPhoneNum(String proPhoneNum) {
         this.proPhoneNum = proPhoneNum;
     }
 
