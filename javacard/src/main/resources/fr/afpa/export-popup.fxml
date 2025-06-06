@@ -14,8 +14,8 @@
       <CheckBox fx:id="vCardCheckBox" mnemonicParsing="false" text=".vcard" />
       <HBox alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="exportContactsButton" mnemonicParsing="false" onAction="#exportContactsList" text="Exporter" />
-            <Button fx:id="cancelExportButton" mnemonicParsing="false" onAction="#cancelExport" text="Annuler" />
+            <Button fx:id="exportContactsButton" mnemonicParsing="false" text="Exporter" />
+            <Button fx:id="cancelExportButton" mnemonicParsing="false" text="Annuler" />
          </children>
       </HBox>
    </children>

@@ -10,8 +10,8 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Supprimer?" />
       <HBox alignment="CENTER">
          <children>
-            <Button fx:id="deleteYesButton" mnemonicParsing="false" onAction="#confirmDeleteContact" text="Oui" />
-            <Button fx:id="deleteNoButton" mnemonicParsing="false" onAction="#cancelDeleteContact" text="Non" />
+            <Button fx:id="deleteYesButton" mnemonicParsing="false" text="Oui" />
+            <Button fx:id="deleteNoButton" mnemonicParsing="false" text="Non" />
          </children>
       </HBox>
    </children>

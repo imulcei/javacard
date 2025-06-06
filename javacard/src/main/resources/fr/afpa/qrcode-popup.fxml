@@ -6,14 +6,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.controllers.ContactController">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QR Code" />
       <ImageView fx:id="qrCodeImg" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <HBox alignment="TOP_RIGHT">
          <children>
-            <Button fx:id="quitQrCodeButton" mnemonicParsing="false" onAction="#quitQrCodePopUp" text="Quitter" />
+            <Button fx:id="quitQrCodeButton" mnemonicParsing="false" text="Quitter" />
          </children>
       </HBox>
    </children>

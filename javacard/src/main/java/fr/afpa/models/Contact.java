@@ -109,4 +109,12 @@ public class Contact {
         this.githubPage = githubPage;
     }
 
+    public ContactController getContactController() {
+        return contactController;
+    }
+
+    public void setContactController(ContactController contactController) {
+        this.contactController = contactController;
+    }
+
 }

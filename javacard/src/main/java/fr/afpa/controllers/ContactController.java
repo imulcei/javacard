@@ -7,6 +7,7 @@ import fr.afpa.models.Contact;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -37,7 +38,7 @@ public class ContactController {
     private ImageView iconSearchBar;
     // list
     @FXML
-    private ArrayList<Contact> listViewContacts;
+    private ListView<Contact> listViewContacts;
     // boutons
     @FXML
     private Button addButton, deleteButton, exportButton;
@@ -56,15 +57,15 @@ public class ContactController {
     @FXML
     private Button quitQrCodeButton;
 
-    private ArrayList<Contact> contactsList = new ArrayList<Contact>();
+    private ArrayList<Contact> contactsList;
 
-    public ContactController(ArrayList<Contact> contactsList) {
-        this.contactsList = contactsList;
+    public ContactController() {
+        // this.contactsList = new ArrayList<Contact>();
     }
 
     @FXML
     public void initialize() {
-
+        
     }
 
     /**
@@ -102,4 +103,13 @@ public class ContactController {
     public void createQrCode() {
 
     }
+
+    public ArrayList<Contact> getContactsList() {
+        return contactsList;
+    }
+
+    public void setContactsList(ArrayList<Contact> contactsList) {
+        this.contactsList = contactsList;
+    }
+
 }
