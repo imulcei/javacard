@@ -61,7 +61,6 @@ public class ContactController {
     private CheckBox csvCheckBox, jsonCheckBox, vCardCheckBox;
     @FXML
     private Button exportContactsButton, cancelExportButton;
-    
 
     private String messageStatut = "";
 
@@ -84,6 +83,8 @@ public class ContactController {
      * Créer un nouveau contact
      */
     public void addContact() {
+
+        messageStatut = "";
         // récupérer les données entrées dans le form
         // créer un new Contact avec les données
         String firstName = firstNameTextField.getText();
@@ -99,55 +100,59 @@ public class ContactController {
 
         // Vérifier les données entrées
 
-        
-            // Utiliser ContactChecker pour valider les données
-            if(!ContactChecker.isNomPrenomValid(firstName)){
-                messageStatut =  messageStatut + "Prénom invalide\n";
-            }   
-            if(!ContactChecker.isNomPrenomValid(lastName)){
-                messageStatut =  messageStatut + "Nom invalide\n";
-            }
-            if(!ContactChecker.isEmailValid(emailString)){
-                messageStatut =  messageStatut + "Email invalide\n";
-            }
-            if(!ContactChecker.isNumero(persoPhoneNum)){
-                messageStatut =  messageStatut + "Numéro de téléphone personnel invalide\n";
-            }
-            if(!ContactChecker.isNumero(proPhoneNum)){
-                messageStatut =  messageStatut + "Numéro de téléphone professionnel invalide\n";
-            }
-            if(!ContactChecker.isDateValid(birthday)){
-                messageStatut =  messageStatut + "Date de naissance invalide\n";
-            }
-            if(!ContactChecker.isAdresse(address)){
-                messageStatut =  messageStatut + "Adresse invalide\n";
-            }
-            if(!ContactChecker.isPseudoValid(pseudo)){
-                messageStatut =  messageStatut + "Pseudo invalide\n";
-            }
-            if(!ContactChecker.isGithubValid(github)){
-                messageStatut =  messageStatut + "GitHub invalide\n";
-            }
-           
-            if (!messageStatut.isEmpty()) {
-                // Afficher les erreurs dans la zone de texte d'erreur
-                errorTextArea.setText(messageStatut);
-                return; // Sortir de la méthode si des erreurs sont présentes
-            }
-        
+        // Utiliser ContactChecker pour valider les données
+        if (!ContactChecker.isNomPrenomValid(firstName)) {
+            messageStatut = messageStatut + "Prénom invalide\n";
+        }
+        if (!ContactChecker.isNomPrenomValid(lastName)) {
+            messageStatut = messageStatut + "Nom invalide\n";
+        }
+        if (!ContactChecker.isEmailValid(emailString)) {
+            messageStatut = messageStatut + "Email invalide\n";
+        }
+        if (!ContactChecker.isNumero(persoPhoneNum)) {
+            messageStatut = messageStatut + "Numéro de téléphone personnel invalide\n";
+        }
+        if (!ContactChecker.isNumero(proPhoneNum)) {
+            messageStatut = messageStatut + "Numéro de téléphone professionnel invalide\n";
+        }
+        if (!ContactChecker.isDateValid(birthday)) {
+            messageStatut = messageStatut + "Date de naissance invalide\n";
+        }
+        if (!ContactChecker.isAdresse(address)) {
+            messageStatut = messageStatut + "Adresse invalide\n";
+        }
+        if (!ContactChecker.isPseudoValid(pseudo)) {
+            messageStatut = messageStatut + "Pseudo invalide\n";
+        }
+        if (!ContactChecker.isGithubValid(github)) {
+            messageStatut = messageStatut + "GitHub invalide\n";
+        }
+
+        if (!messageStatut.isEmpty()) {
+            // Afficher les erreurs dans la zone de texte d'erreur
+            errorTextArea.setText(messageStatut);
+            return; // Sortir de la méthode si des erreurs sont présentes
+        }
 
         // Si toutes les vérifications sont passées, créer le contact
-        // Créer un nouveau contact 
+        // Créer un nouveau contact
 
         Contact newContact = new Contact(firstName, lastName, gender, birthday, pseudo, address, persoPhoneNum,
                 proPhoneNum, emailString, github);
-        // Ajouter le contact à la liste des contacts   
+        // Ajouter le contact à la liste des contacts
+
+        if (contactsList == null) {
+            contactsList = new ArrayList<>();
+        }
 
         contactsList.add(newContact);
-        // Réinitialiser le formulaire 
-        clearForm(); 
-    }
 
+        // Affirmation de la création du contact
+        messageStatut = "Contact créé avec succès : " + newContact.getFirstName() + " " + newContact.getLastName();
+        // Réinitialiser le formulaire
+        clearForm();
+    }
 
     private void clearForm() {
         firstNameTextField.clear();
@@ -160,7 +165,7 @@ public class ContactController {
         pseudoTextField.clear();
         githubTextField.clear();
         genderComboBox.setValue(null);
-        errorTextArea.clear();
+        //errorTextArea.clear();
     }
 
     /**
