@@ -91,6 +91,30 @@ public class ContactController {
         if (deleteButton != null) {
             deleteButton.setOnAction(event -> deleteContact());
         }
+
+        // Initialiser la liste contacts
+        contactsList = new ArrayList<>();
+
+        // Exemple: ajouter quelques contacts de test
+        contactsList.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
+                                     "Ali", "Paris", "0123456789", "0987654321",
+                                     "alice@example.com", "https://github.com/alice"));
+        contactsList.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
+                                     "Bobby", "Lyon", "0234567890", "0876543210",
+                                     "bob@example.com", "https://github.com/bob"));
+
+        // Charger la liste dans la ListView
+        listViewContacts.getItems().setAll(contactsList);
+
+        // Désactiver les boutons au départ
+        modifyButton.setDisable(true);
+        qrCodeButton.setDisable(true);
+
+        // Ajouter un listener sur la sélection
+        listViewContacts.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> getContact()
+        );  
+        
     }
 
     /**
@@ -210,6 +234,39 @@ public class ContactController {
      */
     public void getContact() {
 
+        // Cette méthode devrait être appelée lorsque l'utilisateur sélectionne un
+        // contact
+        // dans la liste des contacts. Elle mettra à jour les champs de la fiche contact
+        // avec les informations du contact sélectionné.
+        Contact selectedContact = listViewContacts.getSelectionModel().getSelectedItem();
+
+        if (selectedContact != null) {
+            contactName.setText(selectedContact.getFirstName() + " " + selectedContact.getLastName());
+            emailField.setText(selectedContact.getEmail());
+            genderField.setText(selectedContact.getGender().toString());
+            addressField.setText(selectedContact.getAddress());
+            pseudoField.setText(selectedContact.getPseudo());
+            personalPhoneNumField.setText(selectedContact.getPersoPhoneNum());
+            birthdayField.setText(selectedContact.getBirthday());
+            proPhoneNumField.setText(selectedContact.getProPhoneNum());
+            githubField.setText(selectedContact.getGithubPage());
+        } else {
+            // Si aucun contact n'est sélectionné, vider les champs
+            contactName.setText("");
+            emailField.setText("");
+            genderField.setText("");
+            addressField.setText("");
+            pseudoField.setText("");
+            personalPhoneNumField.setText("");
+            birthdayField.setText("");
+            proPhoneNumField.setText("");
+            githubField.setText("");
+        }
+
+        // Vous pouvez également mettre à jour l'état des boutons (par exemple, activer
+        // le bouton de modification)
+        modifyButton.setDisable(selectedContact == null);
+        qrCodeButton.setDisable(selectedContact == null);
     }
 
     /**

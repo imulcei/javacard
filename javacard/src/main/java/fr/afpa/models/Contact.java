@@ -117,4 +117,9 @@ public class Contact {
         this.contactController = contactController;
     }
 
+    @Override
+    public String toString() {
+        return firstName + " " + lastName ;
+    }
+
 }
