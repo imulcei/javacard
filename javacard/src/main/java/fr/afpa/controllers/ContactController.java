@@ -17,11 +17,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ContactController {
+    @FXML
+    GridPane gridPaneContent;
     // variables du formulaire
     @FXML
     private TextField firstNameTextField, lastNameTextField,
@@ -91,30 +94,37 @@ public class ContactController {
         if (deleteButton != null) {
             deleteButton.setOnAction(event -> deleteContact());
         }
+        if (modifyButton != null) {
+            modifyButton.setOnAction(event -> updateContact());
+        }
 
-        // Initialiser la liste contacts
+        // Initialisation de la liste
         contactsList = new ArrayList<>();
 
         // Exemple: ajouter quelques contacts de test
         contactsList.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
-                                     "Ali", "Paris", "0123456789", "0987654321",
-                                     "alice@example.com", "https://github.com/alice"));
+                "Ali", "Paris", "0123456789", "0987654321",
+                "alice@example.com", "https://github.com/alice"));
         contactsList.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
-                                     "Bobby", "Lyon", "0234567890", "0876543210",
-                                     "bob@example.com", "https://github.com/bob"));
+                "Bobby", "Lyon", "0234567890", "0876543210",
+                "bob@example.com", "https://github.com/bob"));
 
-        // Charger la liste dans la ListView
-        listViewContacts.getItems().setAll(contactsList);
+        if (listViewContacts != null) {
+            listViewContacts.getItems().setAll(contactsList);
 
-        // Désactiver les boutons au départ
-        modifyButton.setDisable(true);
-        qrCodeButton.setDisable(true);
-
-        // Ajouter un listener sur la sélection
-        listViewContacts.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> getContact()
-        );  
-        
+            // Configuration du listener pour la sélection
+            listViewContacts.getSelectionModel().selectedItemProperty().addListener(
+                    (observable, oldValue, newValue) -> {
+                        getContact();
+                        if (newValue != null) {
+                            modifyButton.setDisable(false);
+                            qrCodeButton.setDisable(false);
+                        } else {
+                            modifyButton.setDisable(true);
+                            qrCodeButton.setDisable(true);
+                        }
+                    });
+        }
     }
 
     /**
@@ -122,10 +132,11 @@ public class ContactController {
      */
     public void addContact() {
         try {
-            Stage formStage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("form.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
+            loader.setController(this);
+            gridPaneContent = loader.load();
+            Stage formStage = new Stage();
+            Scene scene = new Scene(gridPaneContent);
             formStage.setScene(scene);
             formStage.initModality(Modality.APPLICATION_MODAL);
 
