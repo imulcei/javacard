@@ -5,6 +5,8 @@ import java.util.List;
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
 import fr.afpa.tools.ContactChecker;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -42,7 +44,7 @@ public class FormController {
     private Runnable onSendAction;
     private Runnable onCancelAction;
 
-    private List<Contact> contacts;
+    private ObservableList<Contact> contacts;
     private Contact contact;
 
     @FXML
@@ -187,7 +189,7 @@ public class FormController {
         contact.setGithubPage(github);
     }
 
-    public void setContactsList(List<Contact> contacts) {
+    public void setContactsList(ObservableList<Contact> contacts) {
         this.contacts = contacts;
     }
 

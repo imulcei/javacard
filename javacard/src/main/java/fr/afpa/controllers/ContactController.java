@@ -137,9 +137,9 @@ public class ContactController {
             formStage.setResizable(false);
 
             formController.setContactsList(listViewContacts.getItems());
-
             formStage.showAndWait();
 
+            System.out.println("iudsftgsdfjdsjkh");
         } catch (Exception e) {
             System.out.println("Erreur chargement du formulaire.");
             e.printStackTrace();
@@ -205,6 +205,11 @@ public class ContactController {
             formController.setContactInfos(contactSelected);
             formController.setContactsList(listViewContacts.getItems());
             formController.showFormToModify();
+
+            formStage.setOnHidden(e -> {
+                listViewContacts.refresh();
+                getContact();
+            });
 
             formStage.showAndWait();
 
