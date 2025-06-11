@@ -117,9 +117,48 @@ public class Contact {
         this.contactController = contactController;
     }
 
+    public String toVCard() {
+        StringBuilder vCard = new StringBuilder();
+        vCard.append("BEGIN:VCARD\n");
+        vCard.append("VERSION:3.0\n");
+        vCard.append("FN:").append(firstName).append(" ").append(lastName).append("\n");
+        vCard.append("N:").append(lastName).append(";").append(firstName).append(";;").append(gender).append(";\n");
+
+        if (email != null && !email.isEmpty()) {
+            vCard.append("EMAIL:").append(email).append("\n");
+        }
+
+        if (persoPhoneNum != null && !persoPhoneNum.isEmpty()) {
+            vCard.append("TEL;TYPE=HOME:").append(persoPhoneNum).append("\n");
+        }
+
+        if (proPhoneNum != null && !proPhoneNum.isEmpty()) {
+            vCard.append("TEL;TYPE=WORK:").append(proPhoneNum).append("\n");
+        }
+
+        if (address != null && !address.isEmpty()) {
+            vCard.append("ADR;TYPE=HOME:;;").append(address).append(";;;;\n");
+        }
+
+        if (birthday != null && !birthday.isEmpty()) {
+            vCard.append("BDAY:").append(birthday).append("\n");
+        }
+
+        if (githubPage != null && !githubPage.isEmpty()) {
+            vCard.append("URL:").append(githubPage).append("\n");
+        }
+
+        if (pseudo != null && !pseudo.isEmpty()) {
+            vCard.append("NICKNAME:").append(pseudo).append("\n");
+        }
+
+        vCard.append("END:VCARD");
+        return vCard.toString();
+    }
+
     @Override
     public String toString() {
-        return firstName + " " + lastName ;
+        return firstName + " " + lastName;
     }
 
 }

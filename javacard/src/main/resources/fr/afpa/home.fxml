@@ -67,7 +67,7 @@
                         <Image url="@img\pp.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="contactName" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom Nom">
+                  <Text fx:id="contactName" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font>

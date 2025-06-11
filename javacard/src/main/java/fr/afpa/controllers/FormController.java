@@ -1,11 +1,8 @@
 package fr.afpa.controllers;
 
-import java.util.List;
-
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
 import fr.afpa.tools.ContactChecker;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,10 +37,6 @@ public class FormController {
     @FXML
     private Button sendFormButton, cancelButton;
 
-    // actions
-    private Runnable onSendAction;
-    private Runnable onCancelAction;
-
     private ObservableList<Contact> contacts;
     private Contact contact;
 
@@ -54,6 +47,11 @@ public class FormController {
         }
     }
 
+    /**
+     * Gère la création d'un contact.
+     * 
+     * @return Un nouveau contact.
+     */
     public Contact createContact() {
         String messageStatut = "";
 
@@ -112,6 +110,9 @@ public class FormController {
                 persoPhoneNum, proPhoneNum, email, github);
     }
 
+    /**
+     * Affiche la fenêtre du formulaire de modification d'un contact
+     */
     public void showFormToModify() {
         // Récupérer les données du contact pour pré-remplir les champs du formulaire.
         firstNameTextField.setText(contact.getFirstName());
@@ -126,6 +127,9 @@ public class FormController {
         githubTextField.setText(contact.getGithubPage());
     }
 
+    /**
+     * Gère la modification d'un contact
+     */
     public void updateContact() {
         String messageStatut = "";
         // Récupérer les données du formulaire
@@ -223,13 +227,5 @@ public class FormController {
             updateContact();
             closeForm();
         }
-    }
-
-    public void setOnSendAction(Runnable action) {
-        this.onSendAction = action;
-    }
-
-    public void setOnCancelAction(Runnable action) {
-        this.onCancelAction = action;
     }
 }

@@ -1,14 +1,11 @@
 package fr.afpa.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
-import fr.afpa.tools.ContactChecker;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +14,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -63,12 +59,6 @@ public class ContactController {
     @FXML
     private Button exportContactsButton, cancelExportButton;
 
-    private String messageStatut = "";
-
-    // variables QR Code
-    @FXML
-    private Button quitQrCodeButton;
-
     public ContactController() {
     }
 
@@ -83,8 +73,14 @@ public class ContactController {
         if (modifyButton != null) {
             modifyButton.setOnAction(event -> showModifyContactForm());
         }
+        if (qrCodeButton != null) {
+            qrCodeButton.setOnAction(event -> showQRCodePopUp());
+        }
 
         List<Contact> contacts = listViewContacts.getItems();
+
+        modifyButton.setDisable(true);
+        qrCodeButton.setDisable(true);
 
         // Exemple: ajouter quelques contacts de test
         contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
@@ -96,15 +92,7 @@ public class ContactController {
 
         if (listViewContacts != null) {
 
-            ListChangeListener<Contact> multiSelection = new ListChangeListener<Contact>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Contact> changed) {
-                    for (Contact p : changed.getList())
-                        System.out.println(p);
-                }
-            };
             listViewContacts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            listViewContacts.getSelectionModel().getSelectedItems().addListener(multiSelection);
 
             // Configuration du listener pour la sélection
             listViewContacts.getSelectionModel().selectedItemProperty().addListener(
@@ -139,7 +127,6 @@ public class ContactController {
             formController.setContactsList(listViewContacts.getItems());
             formStage.showAndWait();
 
-            System.out.println("iudsftgsdfjdsjkh");
         } catch (Exception e) {
             System.out.println("Erreur chargement du formulaire.");
             e.printStackTrace();
@@ -152,9 +139,8 @@ public class ContactController {
     public void getContact() {
 
         // Cette méthode devrait être appelée lorsque l'utilisateur sélectionne un
-        // contact
-        // dans la liste des contacts. Elle mettra à jour les champs de la fiche contact
-        // avec les informations du contact sélectionné.
+        // contact dans la liste des contacts. Elle mettra à jour les champs de la fiche
+        // contact avec les informations du contact sélectionné.
         Contact selectedContact = listViewContacts.getSelectionModel().getSelectedItem();
 
         if (selectedContact != null) {
@@ -180,8 +166,8 @@ public class ContactController {
             githubField.setText("");
         }
 
-        // Vous pouvez également mettre à jour l'état des boutons (par exemple, activer
-        // le bouton de modification)
+        // Vous pouvez également mettre à jour l'état des boutons
+        // (par exemple, activer le bouton de modification)
         modifyButton.setDisable(selectedContact == null);
         qrCodeButton.setDisable(selectedContact == null);
     }
@@ -246,10 +232,35 @@ public class ContactController {
     }
 
     /**
-     * Créer un QR Code pour un contact
+     * Affiche la popup QR Code
      */
-    public void createQrCode() {
+    public void showQRCodePopUp() {
+        try {
+            Contact contactSelected = listViewContacts.getSelectionModel().getSelectedItem();
+            if (contactSelected == null) {
+                System.out.println("Aucun contact sélectionné");
+                return;
+            }
 
+            URL url = getClass().getResource("/fr/afpa/qrcode-popup.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            VBox qrCode = loader.load();
+
+            QRCodeController qrCodeController = loader.getController();
+            qrCodeController.setContact(contactSelected);
+
+            Stage qrCodeStage = new Stage();
+            Scene scene = new Scene(qrCode);
+            qrCodeStage.setScene(scene);
+            qrCodeStage.initModality(Modality.APPLICATION_MODAL);
+            qrCodeStage.setResizable(false);
+
+            qrCodeStage.showAndWait();
+
+        } catch (Exception e) {
+            System.out.println("Erreur chargement de la pop-up QR Code.");
+            e.printStackTrace();
+        }
     }
 
 }
