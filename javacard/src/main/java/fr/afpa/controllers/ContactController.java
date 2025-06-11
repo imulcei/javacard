@@ -1,11 +1,14 @@
 package fr.afpa.controllers;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
 import fr.afpa.tools.ContactChecker;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -65,16 +69,13 @@ public class ContactController {
     @FXML
     private Button quitQrCodeButton;
 
-    private ArrayList<Contact> contactsList;
-
     public ContactController() {
-        // this.contactsList = new ArrayList<Contact>();
     }
 
     @FXML
     public void initialize() {
         if (addButton != null) {
-            addButton.setOnAction(event -> addContact());
+            addButton.setOnAction(event -> showAddContactForm());
         }
         if (deleteButton != null) {
             deleteButton.setOnAction(event -> showPopUpDelete());
@@ -83,19 +84,27 @@ public class ContactController {
             modifyButton.setOnAction(event -> updateContact());
         }
 
-        // Initialisation de la liste
-        contactsList = new ArrayList<>();
+        List<Contact> contacts = listViewContacts.getItems();
 
         // Exemple: ajouter quelques contacts de test
-        contactsList.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
+        contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
                 "Ali", "Paris", "0123456789", "0987654321",
                 "alice@example.com", "https://github.com/alice"));
-        contactsList.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
+        contacts.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
                 "Bobby", "Lyon", "0234567890", "0876543210",
                 "bob@example.com", "https://github.com/bob"));
 
         if (listViewContacts != null) {
-            listViewContacts.getItems().setAll(contactsList);
+
+            ListChangeListener<Contact> multiSelection = new ListChangeListener<Contact>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Contact> changed) {
+                    for (Contact p : changed.getList())
+                        System.out.println(p);
+                }
+            };
+            listViewContacts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            listViewContacts.getSelectionModel().getSelectedItems().addListener(multiSelection);
 
             // Configuration du listener pour la sélection
             listViewContacts.getSelectionModel().selectedItemProperty().addListener(
@@ -115,9 +124,10 @@ public class ContactController {
     /**
      * Créer un nouveau contact
      */
-    public void addContact() {
+    public void showAddContactForm() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("form.fxml"));
+            URL url = getClass().getResource("/fr/afpa/form.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
             GridPane formRoot = loader.load();
             FormController formController = loader.getController();
             Stage formStage = new Stage();
@@ -126,23 +136,13 @@ public class ContactController {
             formStage.initModality(Modality.APPLICATION_MODAL);
             formStage.setResizable(false);
 
-            formController.setOnSendAction(() -> {
-                Contact newContact = formController.createContact();
-                if (newContact != null) {
-                    contactsList.add(newContact);
-                    listViewContacts.getItems().setAll(contactsList);
-                    formStage.close();
-                }
-            });
-
-            formController.setOnCancelAction(() -> {
-                formStage.close();
-            });
+            formController.setContactsList(listViewContacts.getItems());
 
             formStage.showAndWait();
 
         } catch (Exception e) {
             System.out.println("Erreur chargement du formulaire.");
+            e.printStackTrace();
         }
     }
 
@@ -200,7 +200,7 @@ public class ContactController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmer la suppression");
         alert.setHeaderText(null);
-        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce contact ?");
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce(s) contact(s) ?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -216,7 +216,6 @@ public class ContactController {
         if (selectedContacts == null || selectedContacts.isEmpty()) {
             return;
         }
-        contactsList.removeAll(selectedContacts);
         listViewContacts.getItems().removeAll(selectedContacts);
     }
 
@@ -227,12 +226,12 @@ public class ContactController {
 
     }
 
-    public ArrayList<Contact> getContactsList() {
-        return contactsList;
-    }
+    // public ArrayList<Contact> getContactsList() {
+    // return contactsList;
+    // }
 
-    public void setContactsList(ArrayList<Contact> contactsList) {
-        this.contactsList = contactsList;
-    }
+    // public void setContactsList(ArrayList<Contact> contactsList) {
+    // this.contactsList = contactsList;
+    // }
 
 }

@@ -1,5 +1,7 @@
 package fr.afpa.controllers;
 
+import java.util.List;
+
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
 import fr.afpa.tools.ContactChecker;
@@ -8,8 +10,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class FormController {
+
+    /**
+     * Récupération d'une référence vers le conteneur parent de façon à pouvoir
+     * fermer le fenêtre.
+     */
+    @FXML
+    private GridPane formGridPane;
+
     // variables du formulaire
     @FXML
     private TextField firstNameTextField, lastNameTextField,
@@ -29,6 +41,8 @@ public class FormController {
     // actions
     private Runnable onSendAction;
     private Runnable onCancelAction;
+
+    private List<Contact> contacts;
 
     @FXML
     public void initialize() {
@@ -108,6 +122,31 @@ public class FormController {
         genderComboBox.setValue(null);
         if (errorTextArea != null) {
             errorTextArea.clear();
+        }
+    }
+
+    public void setContactsList(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    @FXML
+    public void closeForm() {
+        Stage stage = (Stage) formGridPane.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void addContact() {
+        if (this.contacts == null) {
+            System.err.println("Liste inexistante.");
+            return;
+        }
+
+        Contact contact = createContact();
+
+        if (contact != null) {
+            this.contacts.add(contact);
+            closeForm();
         }
     }
 
