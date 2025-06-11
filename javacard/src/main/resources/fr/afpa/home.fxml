@@ -25,7 +25,7 @@
                   <TextField fx:id="textFieldSearchBar" text="Rechercher" HBox.hgrow="ALWAYS" />
                   <ImageView fx:id="iconSearchBar" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/loupe.png" />
+                        <Image url="@img\loupe.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -64,7 +64,7 @@
                <children>
                   <ImageView fx:id="profilePicture" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../Downloads/Profile-PNG-Photo.png" />
+                        <Image url="@img\pp.png" />
                      </image>
                   </ImageView>
                   <Text fx:id="contactName" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom Nom">
