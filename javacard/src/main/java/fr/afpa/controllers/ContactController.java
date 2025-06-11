@@ -1,6 +1,7 @@
 package fr.afpa.controllers;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
@@ -8,9 +9,10 @@ import fr.afpa.tools.ContactChecker;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -25,21 +27,7 @@ import javafx.stage.Stage;
 public class ContactController {
     @FXML
     GridPane gridPaneContent;
-    // variables du formulaire
-    @FXML
-    private TextField firstNameTextField, lastNameTextField,
-            emailTextField, personalPhoneNumTextField,
-            birthdayTextField, addressTextField, proPhoneNumTextField,
-            pseudoTextField, githubTextField;
-    @FXML
-    private ComboBox<Gender> genderComboBox;
 
-    @FXML
-    private TextArea errorTextArea;
-
-    // boutons du formulaire
-    @FXML
-    private Button sendFormButton, cancelButton;
     // variables fiche Contact
     @FXML
     private Text contactName, emailField, genderField, addressField,
@@ -85,14 +73,11 @@ public class ContactController {
 
     @FXML
     public void initialize() {
-        if (genderComboBox != null) {
-            genderComboBox.getItems().setAll(Gender.values());
-        }
         if (addButton != null) {
             addButton.setOnAction(event -> addContact());
         }
         if (deleteButton != null) {
-            deleteButton.setOnAction(event -> deleteContact());
+            deleteButton.setOnAction(event -> showPopUpDelete());
         }
         if (modifyButton != null) {
             modifyButton.setOnAction(event -> updateContact());
@@ -133,111 +118,32 @@ public class ContactController {
     public void addContact() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("form.fxml"));
-            loader.setController(this);
-            gridPaneContent = loader.load();
+            GridPane formRoot = loader.load();
+            FormController formController = loader.getController();
             Stage formStage = new Stage();
-            Scene scene = new Scene(gridPaneContent);
+            Scene scene = new Scene(formRoot);
             formStage.setScene(scene);
             formStage.initModality(Modality.APPLICATION_MODAL);
+            formStage.setResizable(false);
 
-            sendFormButton.setOnAction(e -> {
-                try {
-                    messageStatut = "";
-                    // récupérer les données entrées dans le form
-                    // créer un new Contact avec les données
-                    String firstName = firstNameTextField.getText();
-                    String lastName = lastNameTextField.getText();
-                    String emailString = emailTextField.getText();
-                    String persoPhoneNum = personalPhoneNumTextField.getText();
-                    String birthday = birthdayTextField.getText();
-                    String proPhoneNum = proPhoneNumTextField.getText();
-                    Gender gender = genderComboBox.getValue();
-                    String address = addressTextField.getText();
-                    String pseudo = pseudoTextField.getText();
-                    String github = githubTextField.getText();
-
-                    // Vérifier les données entrées
-
-                    // Utiliser ContactChecker pour valider les données
-                    if (!ContactChecker.isNomPrenomValid(firstName)) {
-                        messageStatut = messageStatut + "Prénom invalide\n";
-                    }
-                    if (!ContactChecker.isNomPrenomValid(lastName)) {
-                        messageStatut = messageStatut + "Nom invalide\n";
-                    }
-                    if (!ContactChecker.isEmailValid(emailString)) {
-                        messageStatut = messageStatut + "Email invalide\n";
-                    }
-                    if (!ContactChecker.isNumero(persoPhoneNum)) {
-                        messageStatut = messageStatut + "Numéro de téléphone personnel invalide\n";
-                    }
-                    if (!ContactChecker.isNumero(proPhoneNum)) {
-                        messageStatut = messageStatut + "Numéro de téléphone professionnel invalide\n";
-                    }
-                    if (!ContactChecker.isDateValid(birthday)) {
-                        messageStatut = messageStatut + "Date de naissance invalide\n";
-                    }
-                    if (!ContactChecker.isAdresse(address)) {
-                        messageStatut = messageStatut + "Adresse invalide\n";
-                    }
-                    if (!ContactChecker.isPseudoValid(pseudo)) {
-                        messageStatut = messageStatut + "Pseudo invalide\n";
-                    }
-                    if (!ContactChecker.isGithubValid(github)) {
-                        messageStatut = messageStatut + "GitHub invalide\n";
-                    }
-
-                    if (!messageStatut.isEmpty()) {
-                        // Afficher les erreurs dans la zone de texte d'erreur
-                        errorTextArea.setText(messageStatut);
-                        return; // Sortir de la méthode si des erreurs sont présentes
-                    }
-
-                    // Si toutes les vérifications sont passées, créer le contact
-                    // Créer un nouveau contact
-                    Contact newContact = new Contact(firstName, lastName, gender, birthday, pseudo, address,
-                            persoPhoneNum,
-                            proPhoneNum, emailString, github);
-
-                    // Ajouter le contact à la liste des contacts
-                    if (contactsList == null) {
-                        contactsList = new ArrayList<>();
-                    }
+            formController.setOnSendAction(() -> {
+                Contact newContact = formController.createContact();
+                if (newContact != null) {
                     contactsList.add(newContact);
-
-                    // Affirmation de la création du contact
-                    messageStatut = "Contact créé avec succès : " + newContact.getFirstName() + " "
-                            + newContact.getLastName();
-                    // Réinitialiser le formulaire
-                    clearForm();
-                } catch (Exception ex) {
-                    System.out.println("Erreur dans l'ajout");
+                    listViewContacts.getItems().setAll(contactsList);
+                    formStage.close();
                 }
             });
 
-            cancelButton.setOnAction(e -> {
-                clearForm();
+            formController.setOnCancelAction(() -> {
                 formStage.close();
             });
 
             formStage.showAndWait();
+
         } catch (Exception e) {
             System.out.println("Erreur chargement du formulaire.");
         }
-    }
-
-    private void clearForm() {
-        firstNameTextField.clear();
-        lastNameTextField.clear();
-        emailTextField.clear();
-        personalPhoneNumTextField.clear();
-        birthdayTextField.clear();
-        proPhoneNumTextField.clear();
-        addressTextField.clear();
-        pseudoTextField.clear();
-        githubTextField.clear();
-        genderComboBox.setValue(null);
-        // errorTextArea.clear();
     }
 
     /**
@@ -288,52 +194,30 @@ public class ContactController {
     }
 
     /**
+     * Afficher la popup Supprimer un contact
+     */
+    public void showPopUpDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmer la suppression");
+        alert.setHeaderText(null);
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce contact ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            deleteContact();
+        }
+    }
+
+    /**
      * Supprimer un ou plusieurs contacts
      */
     public void deleteContact() {
-        if (listViewContacts == null || deleteYesButton == null || deleteNoButton == null) {
-            System.err.println("Les composants ne sont pas initialisés");
-            return;
-        }
         ObservableList<Contact> selectedContacts = listViewContacts.getSelectionModel().getSelectedItems();
         if (selectedContacts == null || selectedContacts.isEmpty()) {
             return;
         }
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/afpa/delete-popup.fxml"));
-            Parent root = loader.load();
-            Stage popupStage = new Stage();
-            popupStage.initModality(Modality.APPLICATION_MODAL);
-            popupStage.setScene(new Scene(root));
-            popupStage.setResizable(false);
-
-            // Gestion du bouton confirmer la suppression
-            deleteYesButton.setOnAction(event -> {
-                contactsList.removeAll(selectedContacts);
-                listViewContacts.getItems().removeAll(selectedContacts);
-                popupStage.close();
-            });
-
-            // Gestion du bouton annuler la suppression
-            deleteNoButton.setOnAction(event -> {
-                popupStage.close();
-            });
-
-            // Affiche la pop-up
-            popupStage.showAndWait();
-        } catch (Exception e) {
-            System.out.println("Erreur.");
-        }
-        // Création d'une nouvelle liste sans les contacts à supprimer
-        ArrayList<Contact> newContactsList = new ArrayList<>(contactsList);
-
-        // gestion du bouton supprimer
-        newContactsList.removeAll(selectedContacts);
-
-        contactsList = newContactsList;
-        listViewContacts.getItems().clear();
-        listViewContacts.getItems().addAll(contactsList);
+        contactsList.removeAll(selectedContacts);
+        listViewContacts.getItems().removeAll(selectedContacts);
     }
 
     /**

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.controllers.ContactController">
+<GridPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.afpa.controllers.FormController">
    <columnConstraints>
       <ColumnConstraints hgrow="ALWAYS" />
       <ColumnConstraints hgrow="ALWAYS" />
