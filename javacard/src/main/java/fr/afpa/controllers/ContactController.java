@@ -81,7 +81,7 @@ public class ContactController {
             deleteButton.setOnAction(event -> showPopUpDelete());
         }
         if (modifyButton != null) {
-            modifyButton.setOnAction(event -> updateContact());
+            modifyButton.setOnAction(event -> showModifyContactForm());
         }
 
         List<Contact> contacts = listViewContacts.getItems();
@@ -122,7 +122,7 @@ public class ContactController {
     }
 
     /**
-     * Créer un nouveau contact
+     * Affiche le formulaire de création d'un contact
      */
     public void showAddContactForm() {
         try {
@@ -187,14 +187,35 @@ public class ContactController {
     }
 
     /**
-     * Modifier un contact
+     * Affiche le formulaire pour modifier un contact
      */
-    public void updateContact() {
+    public void showModifyContactForm() {
+        try {
+            URL url = getClass().getResource("/fr/afpa/form.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            GridPane formRoot = loader.load();
+            FormController formController = loader.getController();
+            Stage formStage = new Stage();
+            Scene scene = new Scene(formRoot);
+            formStage.setScene(scene);
+            formStage.initModality(Modality.APPLICATION_MODAL);
+            formStage.setResizable(false);
 
+            Contact contactSelected = listViewContacts.getSelectionModel().getSelectedItem();
+            formController.setContactInfos(contactSelected);
+            formController.setContactsList(listViewContacts.getItems());
+            formController.showFormToModify();
+
+            formStage.showAndWait();
+
+        } catch (Exception e) {
+            System.out.println("Erreur chargement du formulaire.");
+            e.printStackTrace();
+        }
     }
 
     /**
-     * Afficher la popup Supprimer un contact
+     * Affiche la popup Supprimer un contact
      */
     public void showPopUpDelete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -209,7 +230,7 @@ public class ContactController {
     }
 
     /**
-     * Supprimer un ou plusieurs contacts
+     * Supprime un ou plusieurs contacts
      */
     public void deleteContact() {
         ObservableList<Contact> selectedContacts = listViewContacts.getSelectionModel().getSelectedItems();
@@ -225,13 +246,5 @@ public class ContactController {
     public void createQrCode() {
 
     }
-
-    // public ArrayList<Contact> getContactsList() {
-    // return contactsList;
-    // }
-
-    // public void setContactsList(ArrayList<Contact> contactsList) {
-    // this.contactsList = contactsList;
-    // }
 
 }
