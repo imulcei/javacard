@@ -1,8 +1,11 @@
 package fr.afpa.models;
 
+import java.io.Serializable;
+
 import fr.afpa.controllers.ContactController;
 
-public class Contact {
+public class Contact implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String firstName;
     private String lastName;
     private Gender gender;
