@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="15.1">
+<diagram program="umlet" version="15.0.0">
   <zoom_level>9</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
+      <x>675</x>
       <y>216</y>
       <w>216</w>
       <h>315</h>
@@ -32,7 +32,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>27</x>
+      <x>414</x>
       <y>261</y>
       <w>189</w>
       <h>90</h>
@@ -48,7 +48,7 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>207</x>
+      <x>594</x>
       <y>306</y>
       <w>99</w>
       <h>27</h>
@@ -59,7 +59,7 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>585</x>
+      <x>972</x>
       <y>243</y>
       <w>189</w>
       <h>99</h>
@@ -72,7 +72,7 @@ NON_BINAIRE</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>612</x>
+      <x>999</x>
       <y>0</y>
       <w>378</w>
       <h>171</h>
@@ -88,7 +88,7 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>675</x>
+      <x>1062</x>
       <y>378</y>
       <w>189</w>
       <h>99</h>
@@ -101,7 +101,7 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
+      <x>1152</x>
       <y>513</y>
       <w>189</w>
       <h>99</h>
@@ -114,7 +114,7 @@ Serializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
+      <x>1107</x>
       <y>684</y>
       <w>270</w>
       <h>171</h>
@@ -130,8 +130,8 @@ Deserializer&lt;T&gt;
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
-      <y>738</y>
+      <x>720</x>
+      <y>675</y>
       <w>216</w>
       <h>117</h>
     </coordinates>
@@ -148,21 +148,21 @@ Deserializer&lt;T&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
+      <x>819</x>
       <y>522</y>
       <w>45</w>
-      <h>234</h>
+      <h>171</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*
 m2=1
   </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
+      <x>882</x>
       <y>288</y>
       <w>108</w>
       <h>27</h>
@@ -173,7 +173,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
+      <x>882</x>
       <y>513</y>
       <w>288</w>
       <h>27</h>
@@ -184,7 +184,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>495</x>
+      <x>882</x>
       <y>432</y>
       <w>198</w>
       <h>27</h>
@@ -195,7 +195,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>666</x>
+      <x>1053</x>
       <y>162</y>
       <w>27</w>
       <h>99</h>
@@ -206,7 +206,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>810</x>
+      <x>1197</x>
       <y>162</y>
       <w>27</w>
       <h>234</h>
@@ -217,7 +217,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>909</x>
+      <x>1296</x>
       <y>162</y>
       <w>27</w>
       <h>369</h>
@@ -228,7 +228,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>855</x>
+      <x>1242</x>
       <y>603</y>
       <w>27</w>
       <h>99</h>
@@ -239,7 +239,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>342</x>
+      <x>729</x>
       <y>54</y>
       <w>189</w>
       <h>99</h>
@@ -252,7 +252,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>405</x>
+      <x>792</x>
       <y>144</y>
       <w>27</w>
       <h>90</h>
@@ -263,7 +263,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>522</x>
+      <x>909</x>
       <y>99</y>
       <w>108</w>
       <h>27</h>
@@ -274,7 +274,7 @@ m2=1
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>0</x>
+      <x>387</x>
       <y>171</y>
       <w>567</w>
       <h>414</h>
@@ -285,12 +285,75 @@ m2=1
   <element>
     <id>UMLPackage</id>
     <coordinates>
-      <x>9</x>
+      <x>396</x>
       <y>621</y>
       <w>567</w>
-      <h>387</h>
+      <h>450</h>
     </coordinates>
     <panel_attributes>controllers</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>873</y>
+      <w>396</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>QRCodeController
+--
+
++displayQRCode()
++generateQRCode(Contact contact, int width, int height)
++generateQRCodeImage(String vCardInfos, int width, int height)
++closeQRcode()
++createQrCode()
+
+--
++setters</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>423</x>
+      <y>675</y>
+      <w>216</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>FormController
+--
+
++createContact()
++showFormToModify()
++addOrModifyContact()
++closeForm()
+
+--
++setters</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>450</y>
+      <w>189</w>
+      <h>243</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>522</y>
+      <w>27</w>
+      <h>369</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;390.0</additional_attributes>
   </element>
 </diagram>
