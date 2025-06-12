@@ -85,6 +85,9 @@ public class ContactController {
         if (qrCodeButton != null) {
             qrCodeButton.setOnAction(event -> showQRCodePopUp());
         }
+        if (exportButton != null) {
+            exportButton.setOnAction(event -> showExportPopUp());
+        }
 
         List<Contact> contacts = listViewContacts.getItems();
 
@@ -259,7 +262,8 @@ public class ContactController {
         if (selectedContacts == null || selectedContacts.isEmpty()) {
             return;
         }
-        listViewContacts.getItems().removeAll(selectedContacts);
+        // listViewContacts.getItems().removeAll(selectedContacts);
+        filteredListContacts.getSource().removeAll(selectedContacts);
     }
 
     /**
@@ -294,6 +298,23 @@ public class ContactController {
         }
     }
 
-    /** Gestion barre de recherche */
+    public void showExportPopUp() {
+        try {
+            URL url = getClass().getResource("/fr/afpa/export-popup.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            VBox exportVBox = loader.load();
+
+            Stage exporStage = new Stage();
+            Scene scene = new Scene(exportVBox);
+            exporStage.setScene(scene);
+            exporStage.initModality(Modality.APPLICATION_MODAL);
+            exporStage.setResizable(false);
+
+            exporStage.showAndWait();
+        } catch (Exception e) {
+            System.out.println("Erreur chargement de la pop-up Export.");
+            e.printStackTrace();
+        }
+    }
 
 }
