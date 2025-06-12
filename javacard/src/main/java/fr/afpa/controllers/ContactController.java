@@ -1,12 +1,16 @@
 package fr.afpa.controllers;
 
+import java.io.FilterOutputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -59,6 +63,11 @@ public class ContactController {
     @FXML
     private Button exportContactsButton, cancelExportButton;
 
+    /**
+     * Liste des contacts filtrés associée à la "listViewContacts".
+     */
+    private FilteredList<Contact> filteredListContacts;
+
     public ContactController() {
     }
 
@@ -79,6 +88,11 @@ public class ContactController {
 
         List<Contact> contacts = listViewContacts.getItems();
 
+        // création d'une liste pour filtrer les éléments
+        filteredListContacts = new FilteredList<>(listViewContacts.getItems());
+        // association de cette liste au composant ListView
+        listViewContacts.setItems(filteredListContacts);
+
         modifyButton.setDisable(true);
         qrCodeButton.setDisable(true);
 
@@ -90,22 +104,39 @@ public class ContactController {
                 "Bobby", "Lyon", "0234567890", "0876543210",
                 "bob@example.com", "https://github.com/bob"));
 
-        if (listViewContacts != null) {
+        listViewContacts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-            listViewContacts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        // Configuration du listener pour la sélection
+        listViewContacts.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    getContact();
+                    if (newValue != null) {
+                        modifyButton.setDisable(false);
+                        qrCodeButton.setDisable(false);
+                    } else {
+                        modifyButton.setDisable(true);
+                        qrCodeButton.setDisable(true);
+                    }
+                });
 
-            // Configuration du listener pour la sélection
-            listViewContacts.getSelectionModel().selectedItemProperty().addListener(
-                    (observable, oldValue, newValue) -> {
-                        getContact();
-                        if (newValue != null) {
-                            modifyButton.setDisable(false);
-                            qrCodeButton.setDisable(false);
-                        } else {
-                            modifyButton.setDisable(true);
-                            qrCodeButton.setDisable(true);
-                        }
-                    });
+        // Configuration de la barre de recherche
+        if (textFieldSearchBar != null) {
+            textFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+
+                // changement du prédicat (fonction flêchée/lambda) pour prendre en compte les
+                // informations du filtre
+                filteredListContacts.setPredicate(contact -> {
+                    // vérifie si les contacts match avec la saisi
+                    if (newValue == null || newValue.isEmpty()) {
+                        // si "true" on garde l'élément
+                        return true;
+                    } else if (contact.toString().toLowerCase().contains(newValue.toLowerCase())) {
+                        return true;
+                    }
+                    // si "false" l'élément est filtré
+                    return false;
+                });
+            });
         }
     }
 
@@ -262,5 +293,7 @@ public class ContactController {
             e.printStackTrace();
         }
     }
+
+    /** Gestion barre de recherche */
 
 }
