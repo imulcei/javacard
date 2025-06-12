@@ -1,0 +1,55 @@
+@font-face {
+    src: url('Roboto-Regular.ttf');
+}
+
+* {
+    -fx-font-family: "Roboto Regular";
+    -fx-font-size: 12px;
+    -fx-background-color: rgb(246, 248, 253);
+}
+
+.button {
+    -fx-background-color: rgb(51, 76, 122);
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: rgb(68, 99, 158);
+}
+
+#textFieldSearchBar {
+    -fx-background-radius: 10px;
+    -fx-border-color: rgba(0, 0, 0, 0.5);
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+#listViewContacts {
+    -fx-background-radius: 10px;
+    -fx-border-color: rgba(0, 0, 0, 0.5);
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-text-fill: rgb(0, 0, 0);
+}
+
+#contactName {
+    -fx-font-size: 16px;
+}
+
+#firstNameTextField,
+#lastNameTextField,
+#emailTextField,
+#personalPhoneNumTextField,
+#birthdayTextField,
+#addressTextField,
+#proPhoneNumTextField,
+#pseudoTextField,
+#githubTextField,
+#genderComboBox {
+    -fx-background-radius: 5px;
+    -fx-border-color: rgba(0, 0, 0, 0.5);
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-border-insets: 2px 2px 8px 2px;
+}
