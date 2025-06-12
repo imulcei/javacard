@@ -1,11 +1,8 @@
 package fr.afpa.controllers;
 
-import java.io.FilterOutputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import fr.afpa.models.Contact;
 import fr.afpa.models.Gender;
@@ -17,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -56,12 +52,6 @@ public class ContactController {
     // variables pop-up Supprimer
     @FXML
     private Button deleteYesButton, deleteNoButton;
-
-    // variables pop-up Exporter
-    @FXML
-    private CheckBox csvCheckBox, jsonCheckBox, vCardCheckBox;
-    @FXML
-    private Button exportContactsButton, cancelExportButton;
 
     /**
      * Liste des contacts filtrés associée à la "listViewContacts".
@@ -300,12 +290,20 @@ public class ContactController {
 
     public void showExportPopUp() {
         try {
+            Contact contactSelected = listViewContacts.getSelectionModel().getSelectedItem();
+            if (contactSelected == null) {
+                System.out.println("Aucun contact sélectionné");
+                return;
+            }
+
             URL url = getClass().getResource("/fr/afpa/export-popup.fxml");
             FXMLLoader loader = new FXMLLoader(url);
-            VBox exportVBox = loader.load();
+            VBox exportRoot = loader.load();
+
+            ExportController exportController = new ExportController();
 
             Stage exporStage = new Stage();
-            Scene scene = new Scene(exportVBox);
+            Scene scene = new Scene(exportRoot);
             exporStage.setScene(scene);
             exporStage.initModality(Modality.APPLICATION_MODAL);
             exporStage.setResizable(false);
