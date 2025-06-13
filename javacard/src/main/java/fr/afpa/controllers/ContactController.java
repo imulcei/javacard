@@ -1,11 +1,13 @@
 package fr.afpa.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.afpa.models.Contact;
-import fr.afpa.models.Gender;
+import fr.afpa.serializers.BinarySerializerDeserializer;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -58,7 +60,18 @@ public class ContactController {
      */
     private FilteredList<Contact> filteredListContacts;
 
+    /**
+     * Serializer pour sauvegarder/charger les contacts
+     */
+    private BinarySerializerDeserializer serializer;
+
+    /**
+     * Chemin du fichier de sauvegarde
+     */
+    private static final String SAVE_FILE_PATH = "contacts.dat";
+
     public ContactController() {
+        serializer = new BinarySerializerDeserializer();
     }
 
     @FXML
@@ -79,7 +92,8 @@ public class ContactController {
             exportButton.setOnAction(event -> showExportPopUp());
         }
 
-        List<Contact> contacts = listViewContacts.getItems();
+        // Charger les contacts existants au démarrage
+        loadContactsAtStartup();
 
         // création d'une liste pour filtrer les éléments
         filteredListContacts = new FilteredList<>(listViewContacts.getItems());
@@ -88,14 +102,6 @@ public class ContactController {
 
         modifyButton.setDisable(true);
         qrCodeButton.setDisable(true);
-
-        // Exemple: ajouter quelques contacts de test
-        contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
-                "Ali", "Paris", "0123456789", "0987654321",
-                "alice@example.com", "https://github.com/alice"));
-        contacts.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
-                "Bobby", "Lyon", "0234567890", "0876543210",
-                "bob@example.com", "https://github.com/bob"));
 
         listViewContacts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -115,21 +121,70 @@ public class ContactController {
         // Configuration de la barre de recherche
         if (textFieldSearchBar != null) {
             textFieldSearchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-
-                // changement du prédicat (fonction flêchée/lambda) pour prendre en compte les
-                // informations du filtre
                 filteredListContacts.setPredicate(contact -> {
-                    // vérifie si les contacts match avec la saisi
                     if (newValue == null || newValue.isEmpty()) {
-                        // si "true" on garde l'élément
                         return true;
                     } else if (contact.toString().toLowerCase().contains(newValue.toLowerCase())) {
                         return true;
                     }
-                    // si "false" l'élément est filtré
                     return false;
                 });
             });
+        }
+    }
+
+    /**
+     * Charge les contacts au démarrage de l'application
+     */
+    private void loadContactsAtStartup() {
+        if (serializer.fileExists(SAVE_FILE_PATH)) {
+            loadContacts();
+        } else {
+    //         // Si aucun fichier n'existe, créer quelques contacts de test
+    //         List<Contact> contacts = listViewContacts.getItems();
+    //         contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
+    //                 "Ali", "Paris", "0123456789", "0987654321",
+    //                 "alice@example.com", "https://github.com/alice"));
+    //         contacts.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
+    //                 "Bobby", "Lyon", "0234567890", "0876543210",
+    //                 "bob@example.com", "https://github.com/bob"));
+    //         System.out.println("Contacts de démonstration chargés.");
+    System.out.println("Aucun fichier de sauvegarde trouvé. Aucun contact chargé.");
+       }
+            
+            
+            }
+
+    /**
+     * Sauvegarde tous les contacts (appelée à la fermeture de l'application)
+     */
+    public void saveContacts() {
+        try {
+            ObservableList<Contact> contacts = listViewContacts.getItems();
+            serializer.saveAll(SAVE_FILE_PATH, new ArrayList<>(contacts));
+            System.out.println("Contacts sauvegardés automatiquement à la fermeture.");
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la sauvegarde automatique : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Charge tous les contacts (appelée au lancement de l'application)
+     */
+    private void loadContacts() {
+        if (!serializer.fileExists(SAVE_FILE_PATH)) {
+            System.out.println("Aucun fichier de sauvegarde trouvé. Chargement des contacts par défaut.");
+            return;
+        }
+
+        try {
+            List<Contact> loadedContacts = serializer.loadAll(SAVE_FILE_PATH);
+            listViewContacts.setItems(FXCollections.observableArrayList(loadedContacts));
+            System.out.println(loadedContacts.size() + " contact(s) chargé(s) automatiquement au démarrage.");
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement automatique : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -148,7 +203,13 @@ public class ContactController {
             formStage.initModality(Modality.APPLICATION_MODAL);
             formStage.setResizable(false);
 
-            formController.setContactsList(listViewContacts.getItems());
+            ObservableList<Contact> modifiableList = FXCollections.observableArrayList(listViewContacts.getItems());
+            formController.setContactsList(modifiableList);
+
+            formStage.setOnHidden(e -> {
+                listViewContacts.setItems(formController.getModifiedList());
+            });
+
             formStage.showAndWait();
 
         } catch (Exception e) {
@@ -161,10 +222,6 @@ public class ContactController {
      * Afficher les infos des contacts
      */
     public void getContact() {
-
-        // Cette méthode devrait être appelée lorsque l'utilisateur sélectionne un
-        // contact dans la liste des contacts. Elle mettra à jour les champs de la fiche
-        // contact avec les informations du contact sélectionné.
         Contact selectedContact = listViewContacts.getSelectionModel().getSelectedItem();
 
         if (selectedContact != null) {
@@ -178,7 +235,6 @@ public class ContactController {
             proPhoneNumField.setText(selectedContact.getProPhoneNum());
             githubField.setText(selectedContact.getGithubPage());
         } else {
-            // Si aucun contact n'est sélectionné, vider les champs
             contactName.setText("");
             emailField.setText("");
             genderField.setText("");
@@ -190,8 +246,6 @@ public class ContactController {
             githubField.setText("");
         }
 
-        // Vous pouvez également mettre à jour l'état des boutons
-        // (par exemple, activer le bouton de modification)
         modifyButton.setDisable(selectedContact == null);
         qrCodeButton.setDisable(selectedContact == null);
     }
@@ -205,19 +259,21 @@ public class ContactController {
             FXMLLoader loader = new FXMLLoader(url);
             GridPane formRoot = loader.load();
             FormController formController = loader.getController();
-            Stage formStage = new Stage();
-            Scene scene = new Scene(formRoot);
-            formStage.setScene(scene);
-            formStage.initModality(Modality.APPLICATION_MODAL);
-            formStage.setResizable(false);
+
+            ObservableList<Contact> contactListCopy = FXCollections.observableArrayList(listViewContacts.getItems());
+            formController.setContactsList(contactListCopy);
 
             Contact contactSelected = listViewContacts.getSelectionModel().getSelectedItem();
             formController.setContactInfos(contactSelected);
-            formController.setContactsList(listViewContacts.getItems());
             formController.showFormToModify();
 
+            Stage formStage = new Stage();
+            formStage.setScene(new Scene(formRoot));
+            formStage.initModality(Modality.APPLICATION_MODAL);
+            formStage.setResizable(false);
+
             formStage.setOnHidden(e -> {
-                listViewContacts.refresh();
+                listViewContacts.setItems(formController.getModifiedList());
                 getContact();
             });
 
@@ -252,7 +308,6 @@ public class ContactController {
         if (selectedContacts == null || selectedContacts.isEmpty()) {
             return;
         }
-        // listViewContacts.getItems().removeAll(selectedContacts);
         filteredListContacts.getSource().removeAll(selectedContacts);
     }
 
@@ -300,7 +355,8 @@ public class ContactController {
             FXMLLoader loader = new FXMLLoader(url);
             VBox exportRoot = loader.load();
 
-            ExportController exportController = new ExportController();
+            ExportController exportController = loader.getController();
+            exportController.setContact(contactSelected);
 
             Stage exporStage = new Stage();
             Scene scene = new Scene(exportRoot);
@@ -314,5 +370,4 @@ public class ContactController {
             e.printStackTrace();
         }
     }
-
 }

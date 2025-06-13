@@ -201,6 +201,10 @@ public class FormController {
         this.contact = contact;
     }
 
+    public ObservableList<Contact> getModifiedList() {
+        return this.contacts;
+    }
+
     @FXML
     public void closeForm() {
         Stage stage = (Stage) formGridPane.getScene().getWindow();
@@ -209,21 +213,19 @@ public class FormController {
 
     @FXML
     public void addOrModifyContact() {
-        if (this.contacts == null) {
+        if (contacts == null) {
             System.err.println("Liste inexistante.");
             return;
         }
 
         if (contact == null) {
-            Contact contact = createContact();
-
-            if (contact != null) {
-                this.contacts.add(contact);
+            Contact newContact = createContact();
+            if (newContact != null) {
+                contacts.add(newContact);
                 closeForm();
             }
-        }
 
-        if (contact != null) {
+        } else {
             updateContact();
             closeForm();
         }

@@ -16,7 +16,7 @@ public class Contact implements Serializable {
     private String proPhoneNum;
     private String email;
     private String githubPage;
-    private ContactController contactController;
+    private transient ContactController contactController;
 
     public Contact(String firstName, String lastName, Gender gender, String birthday, String pseudo,
             String address, String persoPhoneNum, String proPhoneNum, String email, String githubPage) {

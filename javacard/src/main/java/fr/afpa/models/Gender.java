@@ -4,4 +4,5 @@ public enum Gender {
     FEMME,
     HOMME,
     NON_BINAIRE;
+
 }

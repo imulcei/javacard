@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import fr.afpa.controllers.ContactController;
+
 /**
  * JavaFX App
  */
@@ -19,6 +21,12 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("home.fxml"));
         Scene scene = new Scene(loader.load(), 900, 600);
+
+        // Récupération du contrôleur pour sauvegarder à la fermeture
+        ContactController controller = loader.getController();
+        stage.setOnCloseRequest(event -> controller.saveContacts());
+
+        
         stage.setScene(scene);
         stage.show();
     }
