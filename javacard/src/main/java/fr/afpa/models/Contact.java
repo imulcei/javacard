@@ -155,7 +155,7 @@ public class Contact implements Serializable {
             vCard.append("NICKNAME:").append(pseudo).append("\n");
         }
 
-        vCard.append("END:VCARD");
+        vCard.append("END:VCARD\n");
         return vCard.toString();
     }
 
