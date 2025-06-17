@@ -1,0 +1,24 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Moi moi
+N:moi;Moi;;FEMME;
+EMAIL:moi@gmoe.fr
+TEL;TYPE=HOME:0625232015
+TEL;TYPE=WORK:0635625963
+ADR;TYPE=HOME:;;4 frfr fefef fefe;;;;
+BDAY:03/12/1996
+URL:https://github.com/moimoi
+NICKNAME:moimoi
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:Pépé Pé
+N:Pé;Pépé;;FEMME;
+EMAIL:pepe@hotmail.fr
+TEL;TYPE=HOME:0235625145
+TEL;TYPE=WORK:0631258965
+ADR;TYPE=HOME:;;4 rue du Pépé;;;;
+BDAY:05/06/2000
+URL:http://github.com/pepe
+NICKNAME:pepe
+END:VCARD

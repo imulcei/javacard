@@ -140,20 +140,19 @@ public class ContactController {
         if (serializer.fileExists(SAVE_FILE_PATH)) {
             loadContacts();
         } else {
-    //         // Si aucun fichier n'existe, créer quelques contacts de test
-    //         List<Contact> contacts = listViewContacts.getItems();
-    //         contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
-    //                 "Ali", "Paris", "0123456789", "0987654321",
-    //                 "alice@example.com", "https://github.com/alice"));
-    //         contacts.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
-    //                 "Bobby", "Lyon", "0234567890", "0876543210",
-    //                 "bob@example.com", "https://github.com/bob"));
-    //         System.out.println("Contacts de démonstration chargés.");
-    System.out.println("Aucun fichier de sauvegarde trouvé. Aucun contact chargé.");
-       }
-            
-            
-            }
+            // // Si aucun fichier n'existe, créer quelques contacts de test
+            // List<Contact> contacts = listViewContacts.getItems();
+            // contacts.add(new Contact("Alice", "Dupont", Gender.FEMME, "01/01/1990",
+            // "Ali", "Paris", "0123456789", "0987654321",
+            // "alice@example.com", "https://github.com/alice"));
+            // contacts.add(new Contact("Bob", "Martin", Gender.HOMME, "02/02/1985",
+            // "Bobby", "Lyon", "0234567890", "0876543210",
+            // "bob@example.com", "https://github.com/bob"));
+            // System.out.println("Contacts de démonstration chargés.");
+            System.out.println("Aucun fichier de sauvegarde trouvé. Aucun contact chargé.");
+        }
+
+    }
 
     /**
      * Sauvegarde tous les contacts (appelée à la fermeture de l'application)
@@ -350,6 +349,8 @@ public class ContactController {
                 System.out.println("Aucun contact sélectionné");
                 return;
             }
+            ObservableList<Contact> contactsList = listViewContacts.getItems();
+            ArrayList<Contact> contactsArrayList = new ArrayList<>(contactsList);
 
             URL url = getClass().getResource("/fr/afpa/export-popup.fxml");
             FXMLLoader loader = new FXMLLoader(url);
@@ -357,6 +358,7 @@ public class ContactController {
 
             ExportController exportController = loader.getController();
             exportController.setContact(contactSelected);
+            exportController.setContacts(contactsArrayList);
 
             Stage exporStage = new Stage();
             Scene scene = new Scene(exportRoot);
