@@ -42,8 +42,33 @@ public class VCardSerializer implements Serializer {
 
     @Override
     public void saveAll(String filePath, ArrayList<Contact> contacts) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveAll'");
+        if (filePath == null || filePath.isEmpty()) {
+            System.out.println("Le chemin du fichier est manquant ou vide.");
+            return;
+        }
+        if (contacts == null || contacts.isEmpty()) {
+            System.out.println("Le contact est invalide ou vide.");
+            return;
+        }
+
+        String filePathExports = "exports/" + filePath;
+        // création du dossier Parent
+        Path path = Path.of(filePathExports);
+        Path parentDir = path.getParent();
+        try {
+            if (parentDir != null) {
+                Files.createDirectories(parentDir);
+            }
+            StringBuilder allVCards = new StringBuilder();
+            for (Contact contact : contacts) {
+                if (contact != null) {
+                    allVCards.append(contact.toVCard());
+                }
+            }
+            Files.write(path, allVCards.toString().getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'écriture du fichier : " + e.getMessage());
+        }
     }
 
 }

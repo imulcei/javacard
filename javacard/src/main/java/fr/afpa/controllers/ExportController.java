@@ -20,10 +20,19 @@ public class ExportController {
         this.contact = contact;
         // Optionnel : mettre à jour l'UI avec les infos du contact si besoin
     }
-    
+
     @FXML
     public void initialize() {
         // Logique spécifique à l'export
+        if (csvRadioButton != null) {
+            exportContactsButton.setOnAction(event -> exportToCSV());
+        }
+        if (jsonRadioButton != null) {
+            exportContactsButton.setOnAction(event -> exportToJSON());
+        }
+        if (vCardRadioButton != null) {
+            exportContactsButton.setOnAction(event -> exportToVCard());
+        }
         if (cancelExportButton != null) {
             cancelExportButton.setOnAction(event -> closePopup());
         }
